@@ -1,18 +1,24 @@
 package com.mucida.bff_agendador.controller;
 
 import com.mucida.bff_agendador.bussines.UsuarioService;
-import com.mucida.bff_agendador.bussines.dto.UsuarioDTO;
+import com.mucida.bff_agendador.bussines.dto.request.LoginDTORequest;
+import com.mucida.bff_agendador.bussines.dto.request.UsuarioDTORequest;
+import com.mucida.bff_agendador.bussines.dto.response.UsuarioDTOResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.mucida.bff_agendador.infrastructure.security.SecurityConfig.SECURITY_SCHEME;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/usuario")
 @Tag(name = "Usuário", description = "Cadastro e login de usuários")
+@SecurityRequirement(name = SECURITY_SCHEME)
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
@@ -22,8 +28,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "200", description = "Usuário salvo com sucesso")
     @ApiResponse(responseCode = "400", description = "Usuário já cadastrado")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
-    public ResponseEntity<UsuarioDTO> saveUsuario(@RequestBody UsuarioDTO usuarioDTO) {
-        return ResponseEntity.ok(usuarioService.saveUsuario(usuarioDTO));
+    public ResponseEntity<UsuarioDTOResponse> saveUsuario(@RequestBody UsuarioDTORequest usuarioDTORequest) {
+        return ResponseEntity.ok(usuarioService.saveUsuario(usuarioDTORequest));
     }
 
     @PostMapping("/login")
@@ -31,8 +37,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "200", description = "Usuário logado com sucesso")
     @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
-    public ResponseEntity<String> login(@RequestBody UsuarioDTO usuarioDTO) {
-        return ResponseEntity.ok(usuarioService.login(usuarioDTO));
+    public ResponseEntity<String> login(@RequestBody LoginDTORequest loginDTORequest) {
+        return ResponseEntity.ok(usuarioService.login(loginDTORequest));
     }
 
     @GetMapping
@@ -41,8 +47,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "200", description = "Usuário encontrado com sucesso")
     @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
-    public ResponseEntity<UsuarioDTO> findByEmail(@RequestParam("email") String email,
-                                                  @RequestHeader("Authorization") String token) {
+    public ResponseEntity<UsuarioDTOResponse> findByEmail(@RequestParam("email") String email,
+                                                          @RequestHeader(name = "Authorization", required = false) String token) {
         return ResponseEntity.ok(usuarioService.findByEmail(email, token));
     }
 
@@ -52,7 +58,7 @@ public class UsuarioController {
     @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
     public ResponseEntity<Void> deleteByEmail(@PathVariable String email,
-                                              @RequestHeader("Authorization") String token) {
+                                              @RequestHeader(name = "Authorization", required = false) String token) {
         usuarioService.deleteByEmail(email, token);
         return ResponseEntity.noContent().build();
     }
@@ -63,9 +69,9 @@ public class UsuarioController {
     @ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso")
     @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
-    public ResponseEntity<UsuarioDTO> updateUsuario(@RequestBody UsuarioDTO usuarioDTO,
-                                                    @RequestHeader("Authorization") String token) {
-        return ResponseEntity.ok(usuarioService.updateUsuario(usuarioDTO, token));
+    public ResponseEntity<UsuarioDTOResponse> updateUsuario(@RequestBody UsuarioDTORequest usuarioDTORequest,
+                                                            @RequestHeader(name = "Authorization", required = false) String token) {
+        return ResponseEntity.ok(usuarioService.updateUsuario(usuarioDTORequest, token));
     }
 
 }

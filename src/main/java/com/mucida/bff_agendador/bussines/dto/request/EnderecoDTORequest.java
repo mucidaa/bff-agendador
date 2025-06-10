@@ -1,4 +1,4 @@
-package com.mucida.bff_agendador.bussines.dto;
+package com.mucida.bff_agendador.bussines.dto.request;
 
 import lombok.*;
 
@@ -6,10 +6,8 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class EnderecoDTO {
+public class EnderecoDTORequest {
 
-    private Long id;
     private String rua;
     private String numero;
     private String complemento;

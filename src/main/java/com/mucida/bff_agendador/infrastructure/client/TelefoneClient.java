@@ -1,6 +1,7 @@
 package com.mucida.bff_agendador.infrastructure.client;
 
-import com.mucida.bff_agendador.bussines.dto.TelefoneDTO;
+import com.mucida.bff_agendador.bussines.dto.request.TelefoneDTORequest;
+import com.mucida.bff_agendador.bussines.dto.response.TelefoneDTOResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,11 +9,11 @@ import org.springframework.web.bind.annotation.*;
 public interface TelefoneClient {
 
     @PutMapping
-    TelefoneDTO updateTelefone(@RequestBody TelefoneDTO telefoneDTO,
-                               @RequestParam Long id,
-                               @RequestHeader("Authorization") String token);
+    TelefoneDTOResponse updateTelefone(@RequestBody TelefoneDTORequest telefoneDTORequest,
+                                       @RequestParam Long id,
+                                       @RequestHeader("Authorization") String token);
 
     @PostMapping
-    TelefoneDTO saveTelefone(@RequestBody TelefoneDTO telefoneDTO,
-                            @RequestHeader("Authorization") String token);
+    TelefoneDTOResponse saveTelefone(@RequestBody TelefoneDTORequest telefoneDTORequest,
+                                     @RequestHeader("Authorization") String token);
 }

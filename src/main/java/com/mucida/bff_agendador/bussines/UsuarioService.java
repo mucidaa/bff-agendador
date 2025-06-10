@@ -1,6 +1,8 @@
 package com.mucida.bff_agendador.bussines;
 
-import com.mucida.bff_agendador.bussines.dto.UsuarioDTO;
+import com.mucida.bff_agendador.bussines.dto.request.LoginDTORequest;
+import com.mucida.bff_agendador.bussines.dto.request.UsuarioDTORequest;
+import com.mucida.bff_agendador.bussines.dto.response.UsuarioDTOResponse;
 import com.mucida.bff_agendador.infrastructure.client.UsuarioClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,19 +13,19 @@ public class UsuarioService {
 
     private final UsuarioClient usuarioClient;
 
-    public UsuarioDTO saveUsuario(UsuarioDTO usuarioDTO) {
-        return usuarioClient.saveUsuario(usuarioDTO);
+    public UsuarioDTOResponse saveUsuario(UsuarioDTORequest usuarioDTORequest) {
+        return usuarioClient.saveUsuario(usuarioDTORequest);
     }
 
-    public String login(UsuarioDTO usuarioDTO) {
-        return usuarioClient.login(usuarioDTO);
+    public String login(LoginDTORequest loginDTORequest) {
+        return usuarioClient.login(loginDTORequest);
     }
 
-    public UsuarioDTO updateUsuario(UsuarioDTO usuarioDTO, String token) {
-        return usuarioClient.updateUsuario(usuarioDTO, token);
+    public UsuarioDTOResponse updateUsuario(UsuarioDTORequest usuarioDTORequest, String token) {
+        return usuarioClient.updateUsuario(usuarioDTORequest, token);
     }
 
-    public UsuarioDTO findByEmail(String email, String token) {
+    public UsuarioDTOResponse findByEmail(String email, String token) {
         return usuarioClient.findByEmail(email, token);
     }
 

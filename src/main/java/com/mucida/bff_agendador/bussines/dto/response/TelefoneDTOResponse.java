@@ -1,4 +1,4 @@
-package com.mucida.bff_agendador.bussines.dto;
+package com.mucida.bff_agendador.bussines.dto.response;
 
 import lombok.*;
 
@@ -6,8 +6,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class TelefoneDTO {
+public class TelefoneDTOResponse {
 
     private Long id;
     private String numero;
