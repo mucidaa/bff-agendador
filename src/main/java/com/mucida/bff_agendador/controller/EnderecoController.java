@@ -25,8 +25,9 @@ public class EnderecoController {
     @PutMapping
     @Operation(summary = "Atualiza endereço de usuários", description = "Atualiza endereço de usuários")
     @ApiResponse(responseCode = "200", description = "Endereço atualizado com sucesso")
-    @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+    @ApiResponse(responseCode = "403", description = "Usuário não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
+    @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
     public ResponseEntity<EnderecoDTOResponse> updateEndereco(@RequestBody EnderecoDTORequest enderecoDTORequest,
                                                               @RequestParam Long id,
                                                               @RequestHeader(name = "Authorization", required = false) String token) {
@@ -36,8 +37,9 @@ public class EnderecoController {
     @PostMapping
     @Operation(summary = "Salva endereço de usuários", description = "Salva endereço de usuários")
     @ApiResponse(responseCode = "200", description = "Endereço salvo com sucesso")
-    @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+    @ApiResponse(responseCode = "403", description = "Usuário não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
+    @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
     public ResponseEntity<EnderecoDTOResponse> saveEndereco(@RequestBody EnderecoDTORequest enderecoDTORequest,
                                                             @RequestHeader(name = "Authorization", required = false) String token) {
         return ResponseEntity.ok(enderecoService.saveEndereco(enderecoDTORequest, token));

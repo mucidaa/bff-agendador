@@ -25,8 +25,9 @@ public class TelefoneController {
     @PutMapping
     @Operation(summary = "Atualiza telefone de usuários", description = "Atualiza telefone de usuários")
     @ApiResponse(responseCode = "200", description = "Telefone atualizado com sucesso")
-    @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+    @ApiResponse(responseCode = "403", description = "Usuário não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
+    @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
     public ResponseEntity<TelefoneDTOResponse> updateTelefone(@RequestBody TelefoneDTORequest telefoneDTORequest,
                                                               @RequestParam Long id,
                                                               @RequestHeader(name = "Authorization", required = false) String token) {
@@ -36,8 +37,9 @@ public class TelefoneController {
     @PostMapping
     @Operation(summary = "Salva telefone de usuários", description = "Salva telefone de usuários")
     @ApiResponse(responseCode = "200", description = "Telefone salvo com sucesso")
-    @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+    @ApiResponse(responseCode = "403", description = "Usuário não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
+    @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
     public ResponseEntity<TelefoneDTOResponse> saveTelefone(@RequestBody TelefoneDTORequest telefoneDTORequest,
                                                             @RequestHeader(name = "Authorization", required = false) String token) {
         return ResponseEntity.ok(telefoneService.saveTelefone(telefoneDTORequest, token));
