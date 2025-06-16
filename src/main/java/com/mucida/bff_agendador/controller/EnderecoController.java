@@ -1,6 +1,7 @@
 package com.mucida.bff_agendador.controller;
 
 import com.mucida.bff_agendador.bussines.EnderecoService;
+import com.mucida.bff_agendador.bussines.dto.response.InfosDTOResponse;
 import com.mucida.bff_agendador.bussines.dto.request.EnderecoDTORequest;
 import com.mucida.bff_agendador.bussines.dto.response.EnderecoDTOResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -44,5 +45,15 @@ public class EnderecoController {
                                                             @RequestHeader(name = "Authorization", required = false) String token) {
         return ResponseEntity.ok(enderecoService.saveEndereco(enderecoDTORequest, token));
     }
+
+    @GetMapping()
+    @Operation(summary = "Retorna informações de CEP", description = "Retorna informações de CEP")
+    @ApiResponse(responseCode = "200", description = "Endereço salvo com sucesso")
+    @ApiResponse(responseCode = "400", description = "CEP inválido")
+    @ApiResponse(responseCode = "500", description = "Erro de servidor")
+    public ResponseEntity<InfosDTOResponse> getInfos(@RequestParam String cep) {
+        return ResponseEntity.ok(enderecoService.getInfos(cep));
+    }
+
 
 }

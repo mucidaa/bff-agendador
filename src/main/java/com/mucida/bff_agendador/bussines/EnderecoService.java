@@ -1,5 +1,6 @@
 package com.mucida.bff_agendador.bussines;
 
+import com.mucida.bff_agendador.bussines.dto.response.InfosDTOResponse;
 import com.mucida.bff_agendador.bussines.dto.request.EnderecoDTORequest;
 import com.mucida.bff_agendador.bussines.dto.response.EnderecoDTOResponse;
 import com.mucida.bff_agendador.infrastructure.client.EnderecoClient;
@@ -18,6 +19,10 @@ public class EnderecoService {
 
     public EnderecoDTOResponse saveEndereco(EnderecoDTORequest enderecoDTORequest, String token) {
         return enderecoClient.saveEndereco(enderecoDTORequest, token);
+    }
+
+    public InfosDTOResponse getInfos(String cpf) {
+        return enderecoClient.getInfos(cpf);
     }
 
 }
