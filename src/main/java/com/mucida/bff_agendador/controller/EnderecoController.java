@@ -1,6 +1,7 @@
 package com.mucida.bff_agendador.controller;
 
 import com.mucida.bff_agendador.bussines.EnderecoService;
+import com.mucida.bff_agendador.bussines.dto.response.InfosDTOResponse;
 import com.mucida.bff_agendador.bussines.dto.request.EnderecoDTORequest;
 import com.mucida.bff_agendador.bussines.dto.response.EnderecoDTOResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,8 +26,9 @@ public class EnderecoController {
     @PutMapping
     @Operation(summary = "Atualiza endereço de usuários", description = "Atualiza endereço de usuários")
     @ApiResponse(responseCode = "200", description = "Endereço atualizado com sucesso")
-    @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+    @ApiResponse(responseCode = "403", description = "Usuário não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
+    @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
     public ResponseEntity<EnderecoDTOResponse> updateEndereco(@RequestBody EnderecoDTORequest enderecoDTORequest,
                                                               @RequestParam Long id,
                                                               @RequestHeader(name = "Authorization", required = false) String token) {
@@ -36,11 +38,22 @@ public class EnderecoController {
     @PostMapping
     @Operation(summary = "Salva endereço de usuários", description = "Salva endereço de usuários")
     @ApiResponse(responseCode = "200", description = "Endereço salvo com sucesso")
-    @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+    @ApiResponse(responseCode = "403", description = "Usuário não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
+    @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
     public ResponseEntity<EnderecoDTOResponse> saveEndereco(@RequestBody EnderecoDTORequest enderecoDTORequest,
                                                             @RequestHeader(name = "Authorization", required = false) String token) {
         return ResponseEntity.ok(enderecoService.saveEndereco(enderecoDTORequest, token));
     }
+
+    @GetMapping()
+    @Operation(summary = "Retorna informações de CEP", description = "Retorna informações de CEP")
+    @ApiResponse(responseCode = "200", description = "Endereço salvo com sucesso")
+    @ApiResponse(responseCode = "400", description = "CEP inválido")
+    @ApiResponse(responseCode = "500", description = "Erro de servidor")
+    public ResponseEntity<InfosDTOResponse> getInfos(@RequestParam String cep) {
+        return ResponseEntity.ok(enderecoService.getInfos(cep));
+    }
+
 
 }
