@@ -1,5 +1,6 @@
 package com.mucida.bff_agendador.infrastructure.client;
 
+import com.mucida.bff_agendador.bussines.dto.response.InfosDTOResponse;
 import com.mucida.bff_agendador.bussines.dto.request.EnderecoDTORequest;
 import com.mucida.bff_agendador.bussines.dto.response.EnderecoDTOResponse;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -16,4 +17,7 @@ public interface EnderecoClient {
     @PostMapping
     EnderecoDTOResponse saveEndereco(@RequestBody EnderecoDTORequest enderecoDTORequest,
                                      @RequestHeader("Authorization") String token);
+
+    @GetMapping("/{cep}")
+    InfosDTOResponse getInfos(@PathVariable String cep);
 }
